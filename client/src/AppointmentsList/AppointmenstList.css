@@ -1,0 +1,19 @@
+.appointments-list {
+    padding: 20px;   
+}
+
+.appointments-list ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+.appointments-list__create {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1001;
+
+}

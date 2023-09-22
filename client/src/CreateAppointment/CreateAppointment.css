@@ -1,0 +1,27 @@
+.create-appointment {
+    z-index: 1001;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 500px;
+}
+
+
+.create-appointment__title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.create-appointment__elon {
+    height: 50px;
+    width: 50px;
+    border-radius: 20px;
+}
+
+.create-appointment button {
+    background-color: rgb(89, 189, 236);
+}

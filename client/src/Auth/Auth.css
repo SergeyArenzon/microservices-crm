@@ -1,0 +1,33 @@
+.auth {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(192, 192, 192);
+}
+
+.auth__container {
+    background-color: white;
+
+    height: 100%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px 30px;
+    color: rgb(25, 186, 186);
+
+}
+
+.auth__container button {
+    background-color: rgb(25, 186, 186);
+}
+.auth__mode {
+    text-align: right;
+    color: rgb(3, 3, 129);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.auth__error {
+    text-align: left;
+    color: red;
+
+}

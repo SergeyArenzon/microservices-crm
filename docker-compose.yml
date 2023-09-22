@@ -1,0 +1,78 @@
+version: "3.8"
+services:
+
+  appointment:
+    hostname: appointment
+    build:
+      context: ./appointment
+      dockerfile: Dockerfile
+
+    # ports:
+    #   - "3002:3002"
+    
+    networks:
+      - private
+
+  client:
+    hostname: client
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - public
+      - private
+  
+  customer:
+    hostname: customer
+    build:
+      context: ./customer
+      dockerfile: Dockerfile
+    networks:
+      - private
+
+  auth:
+    hostname: auth
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    networks:
+      - private
+
+  mongo:
+    hostname: mongodb
+    build: 
+      context: ./mongo
+      dockerfile: Dockerfile
+    networks:
+      - private
+      
+  auth-mongo:
+    hostname: auth-mongodb
+    build: 
+      context: ./auth-mongo
+      dockerfile: Dockerfile
+    networks:
+      - private
+
+  proxy:
+    hostname: proxy
+    build: 
+      context: ./proxy
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - private
+      - public
+
+networks:
+  private:
+    driver: bridge 
+    internal: true
+
+  public:
+    driver: bridge
+
+    
