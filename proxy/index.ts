@@ -14,35 +14,47 @@ const cookieParser = require('cookie-parser');
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: 'http://127.0.0.1:8000',
+
+const corsOptions = {
+  origin: 'https://ms-client.com', // Allow requests from this origin
+  methods: ['POST'], // Allow only POST requests
+  allowedHeaders: ['Content-Type'], // Allow only Content-Type header
   credentials: true,
-}));
+};
 
-
-
+app.use(cors(corsOptions));
 
 
 
 
 
 const SERVICES = {
-  CUSTOMER: "http://customer:3001",
-  APPOINTMENT: "http://appointment:3002",
-  AUTH: "http://auth:3003",
+  CUSTOMER: "http://ms-customer-srv:3001",
+  APPOINTMENT: "http://ms-appointment-srv:3002",
+  AUTH: "http://ms-auth-srv:3003",
 }
 
 const maxAge = 3 * 24 * 60 * 60
 
 
 
+// Middleware to log routes
+app.use((req, res, next) => {
+  console.log(`-----Requested Route: ${req.method} ${req.path}`);
+  next();
+});
+
+
+
 // AUTH
 app.post("/signup", async(req, res) => {
-  console.log(req.body);
   
   try {
     let response = await axios.post(`${SERVICES.AUTH}/signup`, req.body);
 
+    console.log("---1---", response.status);
+    
+    
     const {token, refreshToken} = response.data;
 
     res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
@@ -55,6 +67,9 @@ app.post("/signup", async(req, res) => {
 })
 
 app.post("/login", async(req, res) => {
+  console.log("[login]");
+
+  
   try {
     let response = await axios.post(`${SERVICES.AUTH}/login`, req.body);
     if(response.status !== 200) {
@@ -75,15 +90,13 @@ app.get("/auth", async(req, res) => {
     console.log({token, res: response });
     
     if(response.status === 200) {
-      console.log(1);
       
       return res.status(200).json(response.data)
     } else {
-      console.log(2);
       return res.status(401).json({error: "not authenticated"})
     }
   } catch (error) {
-    console.log(3);
+    console.log(error);
     return res.status(401).json({error: "not authenticated"})
     
   }
@@ -110,19 +123,23 @@ app.get("/auth", async(req, res) => {
 
 
 const authMiddleware = async(req,res, next) => {
-  try {
+  console.log("[authMiddleware]v2");
+  next()
+  
+  // try {
     
-    const token = req.cookies?.jwt
-    let response = await axios.post(`${SERVICES.AUTH}/auth`, {token});
-    if(response.status === 200) {
-      next()
-    } else {
-      res.status(401).json({error: "not authenticated"})
-    }
-  } catch (error) {
-    res.status(401).json({error: "not authenticated"})
+  //   const token = req.cookies?.jwt
+  //   console.log("[authMiddleware-> req.cookies?.jwt]", req.cookies?.jwt);
+  //   let response = await axios.post(`${SERVICES.AUTH}/auth`, {token});
+  //   if(response.status === 200) {
+  //     next()
+  //   } else {
+  //     res.status(401).json({error: "not authenticated"})
+  //   }
+  // } catch (error) {
+  //   res.status(401).json({error: "not authenticated", message: error})
     
-  }
+  // }
 }
 
 
@@ -132,6 +149,8 @@ const authMiddleware = async(req,res, next) => {
 app.get("/customer",authMiddleware, async(req, res) => {
   let customers = null;
   try {
+    console.log("[customer]");
+    
     customers = await axios.get(SERVICES.CUSTOMER);
     customers = customers.data;
   } catch (error) {

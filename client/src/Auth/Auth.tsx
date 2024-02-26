@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import './Auth.css'
 import TextField from '@mui/material/TextField';
+import { config } from '../config';
 
 
 
@@ -17,7 +18,7 @@ export default function Auth({setUserHandler, fetchUser}) {
         if(!login) {
             try {
                 
-                const res = await axios.post("http://127.0.0.1:8080/signup", {email: emailRef.current.value, password: passwordRef.current.value },{withCredentials: true});
+                const res = await axios.post(`${config.API}/signup`, {email: emailRef.current.value, password: passwordRef.current.value },{withCredentials: true});
                 console.log({res});
                 if(res.status !== 200 ) {
                     setError("Somthing went wrong")
@@ -31,7 +32,7 @@ export default function Auth({setUserHandler, fetchUser}) {
         else {
             try {
                 
-                const res = await axios.post("http://127.0.0.1:8080/login", {email: emailRef.current.value, password: passwordRef.current.value },{withCredentials: true});
+                const res = await axios.post(`${config.API}/login`, {email: emailRef.current.value, password: passwordRef.current.value },{withCredentials: true});
                 console.log({res});
                 
                 if(res.status !== 200 ) {

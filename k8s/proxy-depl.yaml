@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-proxy-depl
+  annotations:
+    traefik.ingress.kubernetes.io/affinity: "true"
+    traefik.ingress.kubernetes.io/session-cookie-name: "sticky"
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-proxy
+  template:
+    metadata:
+      labels:
+        app: ms-proxy
+    spec:
+      containers:
+        - name: ms-proxy
+          image: sergeyarenzon/ms-proxy:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-proxy-srv
+spec:
+  selector:
+    app: ms-proxy
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

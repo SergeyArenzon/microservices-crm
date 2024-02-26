@@ -14,7 +14,9 @@ app.use(cookieParser())
 
 
 async function main() {
-  await mongoose.connect('mongodb://mongodb:27017');
+  console.log("-----");
+  
+  await mongoose.connect('mongodb://ms-mongo-srv:27017');
 }
 main().catch(err => console.log(err));
 

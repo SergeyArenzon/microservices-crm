@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 
 async function main() {
-  await mongoose.connect('mongodb://mongodb:27017');
+  await mongoose.connect('mongodb://ms-mongo-srv:27017');
 }
 main().catch(err => console.log(err));
 

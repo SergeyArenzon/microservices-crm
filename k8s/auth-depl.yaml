@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-auth-depl
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-auth
+  template:
+    metadata:
+      labels:
+        app: ms-auth
+    spec:
+      containers:
+        - name: ms-auth
+          image: sergeyarenzon/ms-auth:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-auth-srv
+spec:
+  selector:
+    app: ms-auth
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003

@@ -21,7 +21,7 @@ const cookieParser = require('cookie-parser');
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://127.0.0.1:8000',
+    origin: 'http`://127.0.0.1:8000',
     credentials: true,
 }));
 const SERVICES = {

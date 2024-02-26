@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-client-depl
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-client
+  template:
+    metadata:
+      labels:
+        app: ms-client
+    spec:
+      containers:
+        - name: ms-client
+          image: sergeyarenzon/ms-client:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-client-srv
+spec:
+  selector:
+    app: ms-client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

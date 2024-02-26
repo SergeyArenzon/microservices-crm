@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-customer-depl
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-customer
+  template:
+    metadata:
+      labels:
+        app: ms-customer
+    spec:
+      containers:
+        - name: ms-appoicustomerntment
+          image: sergeyarenzon/ms-customer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-customer-srv
+spec:
+  selector:
+    app: ms-customer
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001

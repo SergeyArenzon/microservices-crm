@@ -4,8 +4,14 @@ import CustomersList from './CustomersList/CustomersList';
 import axios from 'axios';
 import AppointmentsList from './AppointmentsList/AppointmentsList';
 import Auth from './Auth/Auth';
+import {config} from './config'
 
 axios.defaults.withCredentials = true
+
+
+console.log("--------test");
+
+
 
 function App() {
   const [show, setShow] = useState('customer');
@@ -14,18 +20,17 @@ function App() {
   const [user, setUser] = useState(null);
 
 
-  const API = 'http://127.0.0.1:8080'
 
 
   const fetchData = async() => {
 
-    let customers = await axios.get(`${API}/customer`);
+    let customers = await axios.get(`${config.API}/customer`);
     customers = customers.data;
     setCustomers(customers)
   }
   const auth = async() => {
 
-    const res = await axios.get("http://127.0.0.1:8080/auth",{withCredentials: true});
+    const res = await axios.get(`${config.API}/auth`,{withCredentials: true});
     if(res.status === 200) {
 
       setUser(res.data)
@@ -49,7 +54,7 @@ function App() {
   const onCreateCustomer = async(name, group) => {
 
     setShowSpinner(true);
-    const res = await axios.post(`${API}/customer`, {name, groupSelection: group });
+    const res = await axios.post(`${config.API}/customer`, {name, groupSelection: group });
     const newCustomers = [...customers];
     console.log(res.data._id);
     
@@ -76,9 +81,9 @@ function App() {
     setShowSpinner(true);
     let newAppointment = null 
     if(appointment._id) {
-      newAppointment = await axios.put(`${API}/appointment/${appointment._id}`, appointment)
+      newAppointment = await axios.put(`${config.API}/appointment/${appointment._id}`, appointment)
     } else {
-      newAppointment = await axios.post(`${API}/appointment/`, appointment)
+      newAppointment = await axios.post(`${config.API}/appointment/`, appointment)
     }
     newAppointment = newAppointment.data.appointment
     const newCustomers = [...customers];  

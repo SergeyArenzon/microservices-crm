@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-appointment-depl
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-appointment
+  template:
+    metadata:
+      labels:
+        app: ms-appointment
+    spec:
+      containers:
+        - name: ms-appointment
+          image: sergeyarenzon/ms-appointment
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-appointment-srv
+spec:
+  selector:
+    app: ms-appointment
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002

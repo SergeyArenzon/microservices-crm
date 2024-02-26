@@ -51,7 +51,7 @@ services:
   auth-mongo:
     hostname: auth-mongodb
     build: 
-      context: ./auth-mongo
+      context: ./mongo
       dockerfile: Dockerfile
     networks:
       - private
