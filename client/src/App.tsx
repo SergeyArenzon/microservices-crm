@@ -24,7 +24,11 @@ function App() {
 
   const fetchData = async() => {
 
-    let customers = await axios.get(`${config.API}/customer`);
+    let customers = await axios.get(`${config.API}/customer`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
     customers = customers.data;
     setCustomers(customers)
   }

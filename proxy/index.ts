@@ -16,15 +16,13 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-  origin: 'https://ms-client.com', // Allow requests from this origin
-  methods: ['POST'], // Allow only POST requests
-  allowedHeaders: ['Content-Type'], // Allow only Content-Type header
+  origin: ['https://ms-client.com',"https://ms-client.com","http://localhost:8000"], // Allow requests from this origin
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allow only POST requests
   credentials: true,
+  // exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar',"Content-Type","*"]
 };
 
 app.use(cors(corsOptions));
-
-
 
 
 
@@ -123,7 +121,7 @@ app.get("/auth", async(req, res) => {
 
 
 const authMiddleware = async(req,res, next) => {
-  console.log("[authMiddleware]v2");
+  console.log("[authMiddleware]v2",req?.cookies);
   next()
   
   // try {

@@ -2,9 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-proxy-depl
-  annotations:
-    traefik.ingress.kubernetes.io/affinity: "true"
-    traefik.ingress.kubernetes.io/session-cookie-name: "sticky"
 spec: 
   replicas: 1
   selector:
